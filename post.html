@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog - POST Demo</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">Create Blog Post</h1>
+      <a
+        href="./index.html"
+        class="absolute top-4 left-8 border-2 border-blue-500 text-black px-4 py-2.5 rounded hover:bg-blue-600 hover:text-white transition-colors"
+      >
+        Back to Blog
+      </a>
+
+      <form id="post-form" class="bg-white p-6 rounded shadow mb-8 bg-red-400">
+        <div class="mb-4">
+          <label for="title" class="block text-gray-700 mb-2">Post Title</label>
+          <input type="text" id="title" class="w-full p-2 border rounded" required />
+        </div>
+
+        <div class="mb-4">
+          <label for="content" class="block text-gray-700 mb-2">Post Content</label>
+          <textarea id="content" class="w-full p-2 border rounded" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          Create Post
+        </button>
+      </form>
+
+      <div id="saved-posts" class="space-y-4">
+        <!-- Posts will appear here -->
+      </div>
+    </div>
+
+    <script>
+      function displaySavedPosts() {
+        const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]')
+
+        const container = document.getElementById('saved-posts')
+        container.innerHTML = '' // Clear existing posts
+
+        posts.forEach((post) => {
+          container.innerHTML += `
+                    <div class="bg-white p-4 rounded shadow">
+                        <h2 class="text-xl font-bold mb-2">${post.title}</h2>
+                        <p class="text-gray-600">${post.content}</p>
+                        <p class="text-sm text-gray-500 mt-2">Created on: ${post.date}</p>
+                    </div>
+                `
+        })
+      }
+
+      document.getElementById('post-form').addEventListener('submit', function (e) {
+        e.preventDefault()
+
+        const title = document.getElementById('title').value
+        const content = document.getElementById('content').value
+
+        const newPost = {
+          title: title,
+          content: content,
+          date: new Date().toLocaleString(),
+        }
+
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newPost),
+        })
+          .then((response) => response.json())
+          .then((post) => {
+            // Get existing posts from localStorage
+            const existingPosts = JSON.parse(localStorage.getItem('blogPosts') || '[]')
+
+            // Add new post to the array
+            existingPosts.unshift(newPost) // Add to start of array
+
+            // Save updated array back to localStorage
+            localStorage.setItem('blogPosts', JSON.stringify(existingPosts))
+
+            // Display all posts including the new one
+            displaySavedPosts()
+
+            // Clear the form
+            this.reset()
+
+            // Show success message
+            alert('Post created successfully!')
+          })
+          .catch((error) => {
+            console.error('Error:', error)
+            alert('Error creating post')
+          })
+      })
+
+      // Display any existing posts when page loads
+      displaySavedPosts()
+    </script>
+  </body>
+</html>
