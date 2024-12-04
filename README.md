@@ -16,7 +16,6 @@ Créez une petite application de blog qui gère des posts via des requêtes HTTP
 
 ### BONUS
 - Sauvegardez les posts dans le localStorage
-- Utilisez ce stockage comme fallback si l'API est indisponible
 
 ## Point de départ
 
