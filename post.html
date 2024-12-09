@@ -8,73 +8,35 @@
   <link rel="stylesheet" href="./css/style.css" />
 </head>
 
-<body class="bg-gray-100 p-8">
+<body class="p-8 bg-gray-100">
   <div class="max-w-2xl mx-auto">
-    <h1 class="text-3xl font-bold text-gray-800 mb-8">Create Blog Post</h1>
+    <h1 class="mb-8 text-3xl font-bold text-gray-800">Create Blog Post</h1>
     <a href="./index.html"
       class="absolute top-4 left-8 border-2 border-blue-500 text-black px-4 py-2.5 rounded hover:bg-blue-600 hover:text-white transition-colors">
       Back to Blog
     </a>
 
-    <form id="post-form" class="bg-white p-6 rounded shadow mb-8 bg-red-400">
-      <div class="mb-4">
-        <label for="title" class="block text-gray-700 mb-2">Post Title</label>
-        <input type="text" id="title" class="w-full p-2 border rounded" required />
-      </div>
+      <form id="post-form" class="bg-white p-6 rounded shadow mb-8 bg-red-400">
+        <div class="mb-4">
+          <label for="title" class="block text-gray-700 mb-2">Post Title</label>
+          <input type="text" id="title" class="w-full p-2 border rounded" required />
+        </div>
 
-      <div class="mb-4">
-        <label for="content" class="block text-gray-700 mb-2">Post Content</label>
-        <textarea id="content" class="w-full p-2 border rounded" rows="4" required></textarea>
-      </div>
+        <div class="mb-4">
+          <label for="content" class="block text-gray-700 mb-2">Post Content</label>
+          <textarea id="content" class="w-full p-2 border rounded" rows="4" required></textarea>
+        </div>
 
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        Create Post
-      </button>
-    </form>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          Create Post
+        </button>
+      </form>
 
     <div id="saved-posts" class="space-y-4">
       <!-- Posts will appear here -->
     </div>
   </div>
 
-  <script>
-    const postForm = document.getElementById('post-form') // la variable demande l'id post-form
-    const savedPosts = document.getElementById('saved-posts')
-    const titleInput = document.getElementById('title')
-    const contentInput = document.getElementById('content')
-
-    function CreatePost(event) {
-      event.preventDefault() // annule le rafraichissement automatique 
-
-      const post = {
-        title: titleInput.value,
-        content: contentInput,
-      }
-
-      fetch('https://jsonplaceholder.typicode.com/posts', { // fetch sert à de communiquer avec la bdd
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(superNewPost),
-      })
-        .then((response) => console.logresponse.json())
-        .then((data) => {
-          postContainer.innerHTML += `
-        <div class="flex flex-col space-y-2">
-          <h2 class="text-xl font-bold">${data.title}</h2>
-          <p class="text-gray-600">${data.content}</p>
-          <hr class = "border-gray-300">
-          </div>
-          `
-        })
-    }
-
-    //this.reset()
-  
-
-    postForm.addEventListener(('submit', CreatePost)) // on veut tracker le submit 
-  </script>
-</body>
-
+    <script></script>
+  </body>
 </html>
